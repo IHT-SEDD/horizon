@@ -41,11 +41,21 @@
 
     <div class="navbar-center hidden lg:flex z-10">
         <ul class="menu menu-horizontal px-1">
-            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url('/sales') }}">Sales</a></li>
+            <li>
+                <a href="{{ url('/dashboard') }}"
+                    class="{{ request()->is('dashboard') ? 'font-semibold text-secondary' : '' }}">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/sales') }}"
+                    class="{{ request()->is('sales*') ? 'font-semibold text-secondary' : '' }}">
+                    Sales
+                </a>
+            </li>
             <li>
                 <details>
-                    <summary class="{{ request()->is('master/*') ? 'text-secondary font-semibold' : '' }}">
+                    <summary class="{{ request()->is('master*') ? 'text-secondary font-semibold' : '' }}">
                         Master Data
                     </summary>
                     @include('layouts.partials.master-data-nav')

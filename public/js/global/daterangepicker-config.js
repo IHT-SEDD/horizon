@@ -49,11 +49,24 @@ const DateRangePicker = (function () {
         $(selector).on("change", function () {
             const drp = $(this).data("daterangepicker");
             const start = drp.startDate.format("YYYY-MM-DD");
-            const end = drp.singleDatePicker
-                ? start
-                : drp.endDate.format("YYYY-MM-DD");
-            onChange(start, end);
+
+            if (drp.singleDatePicker) {
+                onChange(start);
+            } else {
+                const end = drp.endDate.format("YYYY-MM-DD");
+                onChange(start, end);
+            }
         });
+
+        const drp = $(selector).data("daterangepicker");
+        const start = drp.startDate.format("YYYY-MM-DD");
+
+        if (drp.singleDatePicker) {
+            onChange(start);
+        } else {
+            const end = drp.endDate.format("YYYY-MM-DD");
+            onChange(start, end);
+        }
     }
 
     return {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use App\Services\ModelResolver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -50,6 +51,7 @@ class MasterController extends Controller
 
     public function create(Request $request, $model)
     {
+        DB::beginTransaction();
         try {
             $modelClass = $this->resolver->resolve($model);
 
@@ -63,10 +65,14 @@ class MasterController extends Controller
 
             $modelClass::create($validator->validated());
 
+            DB::commit();
+
             return response()->json([
                 'message' => $model . ' data added successfully!'
             ], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();
+            
             return response()->json([
                 'message' => 'Theres an error on our side',
                 'error' => $th->getMessage()
@@ -84,6 +90,10 @@ class MasterController extends Controller
             }
 
             $query = $modelClass::select('id', 'name');
+
+            if ($model === 'tax') {
+                $query = $modelClass::select('id', 'name', 'value');
+            }
 
             $table = (new $modelClass)->getTable();
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('quotation_number')->unique();
+            $table->string('quotation_number')->unique()->nullable();
 
             $table->foreignId('customer_id')
                 ->constrained('customers')
@@ -30,13 +30,13 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->decimal('untaxed_amount', 15, 2);
-            $table->decimal('tax_amount', 15, 2)->nullable();
-            $table->decimal('grand_total', 15, 2);
+            $table->bigInteger('untaxed_amount')->default(0);
+            $table->bigInteger('tax_amount')->default(0);
+            $table->bigInteger('grand_total')->default(0);
 
             $table->string('description')->nullable();
-            $table->date('expiration_date')->nullable();
-            $table->string('status');
+            $table->date('expiration_date');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

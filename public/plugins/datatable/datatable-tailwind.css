@@ -247,3 +247,26 @@ div.dt-scroll-body > table.dataTable > thead > tr > td {
     outline: 2px solid rgba(255, 255, 255, 0.05);
 }
 
+div.dt-container {
+    width: 100% !important;
+    flex: content !important;
+    flex-direction: column !important;
+}
+
+div.dt-info {
+    flex: 1 1 0% !important;
+    min-width: 150px;
+}
+
+div.dt-paging {
+    flex: 1 1 0% !important;
+    display: flex !important;
+    justify-content: end !important;
+    width: 100% !important;
+}
+
+div.dt-paging > nav > ul.pagination {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100% !important;
+}

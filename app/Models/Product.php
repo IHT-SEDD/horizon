@@ -9,6 +9,8 @@ class Product extends Model
 {
     protected $guarded = ['id'];
 
+    protected $with = ['unit', 'category'];
+
     public static function validate($request)
     {
         return Validator::make(

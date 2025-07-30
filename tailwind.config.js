@@ -11,15 +11,48 @@ export default {
     ],
 
     safelist: [
+        "form-control",
+
+        "label",
+        "label-text",
+
         "badge",
         "badge-info",
         "badge-success",
+        "badge-ghost",
         "badge-warning",
-        "gap-2",
-        "text-md",
-        "font-semibold",
+        "badge-error",
+
         "text-red-400",
         "text-base-100",
+        "text-base-200",
+        "text-error",
+        "text-info",
+
+        "textarea",
+        "textarea-bordered",
+        "textarea-xs",
+
+        "btn",
+        "btn-sm",
+        "btn-square",
+        "btn-outline",
+        "btn-error",
+        "btn-ghost",
+
+        "input",
+        "input-bordered",
+        "input-sm",
+
+        "dropdown",
+        "dropdown-bottom",
+        "dropdown-end",
+        "dropdown-content",
+        "menu",
+
+        "bg-base-100",
+
+        "border-base-200"
     ],
 
     theme: {

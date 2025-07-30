@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('table')
-<x-datatable>
+<x-datatable idTable="master-table">
  <th>No</th>
  <th>Name</th>
  <th>Value</th>

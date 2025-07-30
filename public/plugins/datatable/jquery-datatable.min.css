@@ -796,3 +796,25 @@ html.dark .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 html.dark .dataTables_wrapper .dataTables_paginate .paginate_button:active {
     background: #3a3a3a;
 }
+
+div.dt-container {
+    width: 100% !important;
+}
+
+div.dt-info {
+    flex: 1 1 0% !important;
+    min-width: 150px;
+}
+
+div.dt-paging {
+    flex: 1 1 0% !important;
+    display: flex !important;
+    justify-content: end !important;
+    width: 100% !important;
+}
+
+div.dt-paging > nav > ul.pagination {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100% !important;
+}

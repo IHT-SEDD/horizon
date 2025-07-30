@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sales_products', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('sale_id')
+            $table->foreignId('sales_id')
                 ->constrained('sales')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -24,15 +24,15 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreignId('tax_id')
+            $table->foreignId('tax_id')->nullable()
                 ->constrained('taxes')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->decimal('discount', 15, 2)->nullable();
-            $table->string('qty');
+            $table->bigInteger('discount')->default(0);
+            $table->bigInteger('quantity')->default(0);
             $table->string('tags')->nullable();
-            $table->decimal('subtotal', 15, 2);
+            $table->bigInteger('subtotal')->default(0);
 
             $table->timestamps();
         });

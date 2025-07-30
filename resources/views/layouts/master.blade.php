@@ -38,10 +38,12 @@
 <script src="{{ asset('plugins/datatable/datatable-tailwind.js') }}"></script>
 <script src="{{ asset('plugins/tom-select/tom-select-complete.min.js') }}"></script>
 <script src="{{ asset('plugins/dayjs.min.js') }}"></script>
+
 <script src="{{ asset('js/global/datatable.js') }}"></script>
-<script src="{{ asset('js/global/form-validation.js') }}"></script>
-<script src="{{ asset('js/global/form-submit.js') }}"></script>
+<script src="{{ asset('js/global/forms/form-validation.js') }}"></script>
+<script src="{{ asset('js/global/forms/form-submit.js') }}"></script>
 <script src="{{ asset('js/global/tom-select-config.js') }}"></script>
 <script src="{{ asset('js/global/utils.js') }}"></script>
+
 <script src="{{ asset('js/masters/' . $model .'.js') }}"></script>
 @endsection

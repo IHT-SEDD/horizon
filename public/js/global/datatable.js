@@ -24,7 +24,7 @@ const DataTable = (function () {
                 },
             },
             columns: dtColumns,
-            dom: '<"flex justify-between items-center mb-4">rt<"flex justify-between items-center mt-4 text-sm"ip>',
+            dom: '<"flex flex-wrap gap-2 justify-between items-center w-full mt-6">rt<"flex flex-wrap gap-2 justify-between items-center text-sm w-full mt-6"ip>',
             drawCallback: function () {
                 if (window.lucide) {
                     lucide.createIcons();
@@ -43,6 +43,22 @@ const DataTable = (function () {
                 }, 600)
             );
         }
+
+        $(document).on("click", ".btn-action-dropdown", function (e) {
+            e.stopPropagation();
+
+            let $dropdown = $(this)
+                .closest(".action-dropdown")
+                .find(".dropdown-content");
+            console.log($dropdown);
+
+            $dropdown
+                .css({
+                    display: "fixed",
+                    "z-index": "9999",
+                })
+                .show();
+        });
     }
 
     return {
@@ -50,6 +66,6 @@ const DataTable = (function () {
     };
 })();
 
-function reloadDataTable() {
-    $("#master-table").DataTable().ajax.reload(null, false);
+function reloadDataTable(dtId) {
+    $(dtId).DataTable().ajax.reload(null, false);
 }
