@@ -20,14 +20,16 @@
 
 <!-- Toolbar -->
 <div class="w-full px-3 mb-3">
- <div class="bg-base-100 rounded-xl shadow-md shadow-base-200 py-2 px-3 w-full overflow-visible">
+ <div
+  class="bg-base-100 rounded-xl shadow-md shadow-base-200 py-2 px-3 w-full overflow-visible flex md:flex-row flex-col justify-between items-center">
+  <!-- Tools 1 -->
   <ul class="menu bg-base-200/50 lg:menu-horizontal rounded-box gap-2">
    <!-- Print Btn -->
    <li>
-    <a class="btn btn-outline btn-primary-content btn-sm">
+    <button id="print_btn" class="btn btn-outline btn-primary-content btn-sm">
      <i data-lucide="printer" width="13" height="13"></i>
      Print
-    </a>
+    </button>
    </li>
    <!-- Confirm Btn -->
    <li>
@@ -48,6 +50,31 @@
     <button id="lock_btn" class="btn btn-outline btn-info btn-sm">
      <i data-lucide="lock" width="13" height="13"></i>
      Lock
+    </button>
+   </li>
+   <!-- Delete Btn -->
+   <li>
+    <button id="delete_btn" class="btn btn-error btn-sm">
+     <i data-lucide="trash" width="13" height="13"></i>
+     Delete
+    </button>
+   </li>
+  </ul>
+
+  <!-- Tools 2 -->
+  <ul class="menu bg-base-200/50 lg:menu-horizontal rounded-box gap-2">
+   <!-- Export to PDF Btn -->
+   <li>
+    <button id="export_pdf_btn" class="btn btn-primary btn-sm" data-type="pdf">
+     <i data-lucide="file-down" width="13" height="13"></i>
+     Export to PDF
+    </button>
+   </li>
+   <!-- Export to Excel Btn -->
+   <li>
+    <button id="export_excel_btn" class="btn btn-secondary btn-sm" data-type="excel">
+     <i data-lucide="file-down" width="13" height="13"></i>
+     Export to XLSX
     </button>
    </li>
   </ul>

@@ -88,11 +88,6 @@ dtColumns = [
                             <i data-lucide="circle-ellipsis" width="13" height="13"></i> Detail
                         </a>
                     </li>
-                    <li class="border-t border-dashed border-base-200">
-                        <a class="flex justify-start items-center gap-3 text-error">
-                            <i data-lucide="trash" width="13" height="13"></i> Delete
-                        </a>
-                    </li>
                 </ul>
             </div>`;
         },

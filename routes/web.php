@@ -42,6 +42,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/detail/{id}/confirm', [SalesController::class, 'confirmSalesOrder']);
         Route::get('/detail/{id}/cancel', [SalesController::class, 'cancelSalesOrder']);
         Route::get('/detail/{id}/lock', [SalesController::class, 'lockSalesOrder']);
+
+        // Print
+        Route::get('/detail/{id}/print', [SalesController::class, 'printSalesOrder']);
+
+        // Export
+        Route::get('/detail/{id}/export', [SalesController::class, 'exportSalesOrder']);
     });
 });
 

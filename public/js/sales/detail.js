@@ -4,7 +4,8 @@ let urlSplit,
     skeleton,
     unSkeleton,
     detailSO,
-    updateStatusSalesOrder;
+    updateStatusSalesOrder,
+    printSalesOrder;
 
 $.ajaxSetup({
     headers: {
@@ -17,9 +18,14 @@ urlSplit = location.pathname.split("/");
 const id = urlSplit[3];
 
 // Buttons toolbar
+const printBtn = $("#print_btn");
 const confirmBtn = $("#confirm_btn");
 const cancelBtn = $("#cancel_btn");
 const lockBtn = $("#lock_btn");
+const deleteBtn = $("#delete_btn");
+
+const exportPdfBtn = $("#export_pdf_btn");
+const exportXlsxBtn = $("#export_excel_btn");
 
 // Populate information data
 informationPopulate = (data) => {
@@ -119,18 +125,24 @@ detailSO = () => {
             informationPopulate(data);
             subInformationPopulate(data);
 
-            if (data.sales_order.status == "confirmed" || data.sales_order.status == "canceled") {
+            if (
+                data.sales_order.status == "confirmed" ||
+                data.sales_order.status == "canceled"
+            ) {
                 confirmBtn.prop("disabled", true);
                 cancelBtn.prop("disabled", true);
                 lockBtn.prop("disabled", true);
+                deleteBtn.prop("disabled", true);
             } else if (data.sales_order.status == "locked") {
                 confirmBtn.prop("disabled", false);
                 cancelBtn.prop("disabled", false);
                 lockBtn.prop("disabled", true);
+                deleteBtn.prop("disabled", true);
             } else {
                 confirmBtn.prop("disabled", false);
                 cancelBtn.prop("disabled", false);
                 lockBtn.prop("disabled", false);
+                deleteBtn.prop("disabled", false);
             }
         },
         error: function (xhr, status, error) {
@@ -223,8 +235,31 @@ updateStatusSalesOrder = () => {
     });
 };
 
+// Print sales order
+printSalesOrder = () => {
+    $(printBtn).on("click", function () {
+        const printWindow = window.open(`/sales/detail/${id}/print`, "_blank");
+        printWindow.onload = function () {
+            printWindow.focus();
+            printWindow.print();
+        };
+    });
+};
+
+// Export sales order
+exportSalesOrder = () => {
+    $("#export_pdf_btn, #export_excel_btn").on("click", function (e) {
+        e.preventDefault();
+
+        const type = $(this).data("type");
+        window.location.href = `/sales/detail/${id}/export?type=${type}`;
+    });
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     detailSO();
     updateStatusSalesOrder();
+    printSalesOrder();
+    exportSalesOrder();
     DataTable.init(dtColumns, dtUrl, dtId);
 });

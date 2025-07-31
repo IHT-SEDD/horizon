@@ -7,7 +7,7 @@ const notyf = new Notyf({
     types: [
         {
             type: "warning",
-            background: "orange",
+            background: "#ffbe00",
             icon: {
                 className: "material-icons",
                 tagName: "i",
@@ -16,13 +16,13 @@ const notyf = new Notyf({
         },
         {
             type: "error",
-            background: "indianred",
+            background: "#ff5861",
             duration: 2000,
             dismissible: true,
         },
         {
             type: "success",
-            background: "green",
+            background: "#00a96e",
             duration: 2000,
             dismissible: true,
         },

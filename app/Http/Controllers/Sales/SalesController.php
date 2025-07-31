@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sales;
 
+use App\Exports\SalesOrderExport;
 use App\Http\Controllers\Controller;
 use App\Services\SalesOrderService;
 use App\Models\Product;
@@ -12,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Yajra\DataTables\DataTables;
 
 class SalesController extends Controller
@@ -179,6 +182,67 @@ class SalesController extends Controller
             return DataTables::of($data)->make(true);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function printSalesOrder($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $sales = Sales::with(['salesProducts', 'customers', 'paymentTerms'])->findOrFail($id);
+
+            if (!in_array($sales->status, [Sales::STATUS_QUOTATION, Sales::STATUS_CONFIRMED])) {
+                DB::rollBack();
+                return response()->json(['message' => 'Cannot print. Because this sales order has been: ' . $sales->status], 400);
+            }
+
+            return view('prints.sales.' . strtolower($sales->status), [
+                'sales' => $sales,
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Theres an error on our side',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function exportSalesOrder(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $type = $request->query('type');
+            $sales = Sales::with(['salesProducts', 'customers', 'paymentTerms'])->findOrFail($id);
+
+            if (!in_array($sales->status, [Sales::STATUS_QUOTATION, Sales::STATUS_CONFIRMED])) {
+                DB::rollBack();
+                return response()->json(['message' => 'Sales order cannot to export'], 400);
+            }
+
+            DB::commit();
+
+            if ($type === 'pdf') {
+                return Pdf::view('exports.pdf.sales.' . strtolower($sales->status), compact('sales'))
+                    ->name(strtoupper($sales->status) . '_SALES_ORDER_' . $sales->quotation_number . '.pdf')
+                    ->download();
+            }
+
+            if ($type === 'excel') {
+                return Excel::download(new SalesOrderExport($sales), strtoupper($sales->status) . '_SALES_ORDER_' . $sales->quotation_number . '.xlsx');
+            }
+
+            return response()->json(['message' => 'Invalid export type.'], 400);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Theres an error on our side',
+                'error' => $th->getMessage()
+            ], 500);
         }
     }
 
